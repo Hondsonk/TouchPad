@@ -10,7 +10,7 @@ TouchPad::TouchPad(QObject *parent)
       mapWidth(640),
       mapHeight(480)
 {
-    // Note:: Touchpad needs to be opened before map.  That's fine since hard key service normally comes up way before the nav service anyway.
+    // Note:: Touchpad needs to be opened before map.  That's fine since ICS services normally comes up way before the nav service anyway.
     map = new org::hondson::demo::Map("org.hondson.demo.Map", "/Map", QDBusConnection::sessionBus(), this);
     QObject::connect(map, SIGNAL(windowSizeChanged(int, int)), this, SLOT(onMapSizeChanged(int,int)));
 }
@@ -79,29 +79,5 @@ void TouchPad::pan(int dx, int dy)
 
 void TouchPad::onSwiped(QString dir, int dist)
 {
-    qDebug() << "TouchPad Swipe: " << dir << dist;
     map->swipe(dir, dist);
-    //QMetaObject MetaObject = this->staticMetaObject;
-    //QMetaEnum dirs = MetaObject.enumerator(MetaObject.indexOfEnumerator("Directions"));//QMetaEnum::fromType<TouchPad::Directions>();
-
-    /*
-    switch(dirs.keysToValue(dir.toLatin1()))
-    {
-    case up:
-        qDebug() << "Swiped Up";
-        break;
-    case down:
-        qDebug() << "Swiped Down";
-        break;
-    case left:
-        qDebug() << "Swiped Left";
-        break;
-    case right:
-        qDebug() << "Swiped Right";
-        break;
-    default:
-        qDebug() << "Unknown Swipe Dir";
-        break;
-    }
-    */
 }
